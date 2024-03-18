@@ -14,7 +14,6 @@ function Messages({ messages }: Props) {
         messages.length > 10 ? "pb-96" : "pb-32"
       }`}
     >
-      <LoadingMessage />
       {!messages.length && (
         <div className="flex flex-col space-y-10 flex-1 items-center justify-end">
           <p className="text-gray-500 animate-pulse">Ask anything from Nova</p>
@@ -27,6 +26,8 @@ function Messages({ messages }: Props) {
       )}
 
       <div className="max-w-3xl mx-auto">
+        <LoadingMessage />
+
         <div className="p-5 space-y-5">
           {messages.map((message) => (
             <div key={message.id} className="space-y-5">

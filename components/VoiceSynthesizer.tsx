@@ -18,7 +18,7 @@ function VoiceSynthesizer({ state, displaySettings }: Props) {
 
   useEffect(() => {
     setSynth(window.speechSynthesis);
-  }, [window]);
+  }, []);
 
   useEffect(() => {
     if (!state.response || !synth) return;
@@ -35,7 +35,7 @@ function VoiceSynthesizer({ state, displaySettings }: Props) {
     return () => {
       synth.cancel();
     };
-  }, [state]);
+  }, [state, synth, voice, pitch, rate, volume]);
 
   const handleVoiceChange = (e: ChangeEvent<HTMLSelectElement>) => {
     const voices = window.speechSynthesis.getVoices();
