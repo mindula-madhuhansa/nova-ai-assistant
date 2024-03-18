@@ -8,6 +8,8 @@ import { useFormState } from "react-dom";
 import Messages from "@/components/Messages";
 import Recorder, { mimeType } from "@/components/Recorder";
 import transcript from "@/actions/transcript";
+import VoiceSynthesizer from "@/components/VoiceSynthesizer";
+import { Message } from "@/types";
 
 const initialState = {
   sender: "",
@@ -15,17 +17,12 @@ const initialState = {
   id: "",
 };
 
-export type Message = {
-  sender: string;
-  response: string;
-  id: string;
-};
-
 export default function Home() {
   const fileRef = useRef<HTMLInputElement | null>(null);
   const submitButtonRef = useRef<HTMLButtonElement | null>(null);
 
   const [state, formAction] = useFormState(transcript, initialState);
+  const [displaySettings, setDisplaySettings] = useState(false);
 
   const [messages, setMessages] = useState<Message[]>([]);
 
@@ -65,17 +62,12 @@ export default function Home() {
     <main className="bg-black h-screen overflow-y-scroll scrollbar-thin scrollbar-thumb-indigo-700 scrollbar-track-indigo-300">
       {/* Header */}
       <header className="flex justify-between items-center fixed top-0 text-white w-full p-5">
-        <Image
-          className="rounded-full object-contain"
-          src="/nova.png"
-          alt="Nova"
-          height={50}
-          width={50}
-        />
+        <h1 className="text-3xl font-bold">NOVA AI Assistant</h1>
 
         <SettingsIcon
           size={40}
           className="p-2 m-2 rounded-full cursor-pointer bg-indigo-600 text-black transition-all ease-in-out duration-150 hover:bg-indigo-700 hover:text-white"
+          onClick={() => setDisplaySettings(!displaySettings)}
         />
       </header>
 
@@ -90,10 +82,12 @@ export default function Home() {
           Submit Audio
         </button>
 
-        <div className="fixed bottom-0 w-full overflow-hidden bg-black rounded-t-3xl">
+        <div className="fixed bottom-0 w-full overflow-hidden bg-black">
           <Recorder uploadAudio={uploadAudio} />
 
-          <div>{/* Voice Synthesiser */}</div>
+          <div>
+            <VoiceSynthesizer state={state} displaySettings={displaySettings} />
+          </div>
         </div>
       </form>
     </main>
