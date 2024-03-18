@@ -7,9 +7,11 @@ function LoadingMessage() {
   const { pending } = useFormStatus();
   return (
     pending && (
-      <p className="message ml-auto text-white">
-        <BeatLoader color="white" />
-      </p>
+      <div className="max-w-3xl mx-auto">
+        <p className="message ml-auto text-white">
+          <BeatLoader color="white" />
+        </p>
+      </div>
     )
   );
 }

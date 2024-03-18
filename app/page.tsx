@@ -56,7 +56,7 @@ export default function Home() {
     }
   };
 
-  console.log(messages);
+  // console.log(messages);
 
   return (
     <main className="bg-black h-screen overflow-y-scroll scrollbar-thin scrollbar-thumb-indigo-700 scrollbar-track-indigo-300">

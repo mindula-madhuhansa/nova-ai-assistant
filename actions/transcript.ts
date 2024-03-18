@@ -8,7 +8,7 @@ import {
 import { v4 as uuidv4 } from "uuid";
 
 async function transcript(prevState: any, formData: FormData) {
-  console.log("PREVIOUS STATE:", prevState);
+  // console.log("PREVIOUS STATE:", prevState);
 
   const id = uuidv4();
 
@@ -18,7 +18,7 @@ async function transcript(prevState: any, formData: FormData) {
     process.env.AZURE_DEPLOYMENT_NAME === undefined ||
     process.env.AZURE_DEPLOYMENT_COMPLETIONS_NAME === undefined
   ) {
-    console.log("Azure credentials not set");
+    // console.log("Azure credentials not set");
     return {
       sender: "",
       response: "Azure credentials not set",
@@ -34,14 +34,14 @@ async function transcript(prevState: any, formData: FormData) {
     };
   }
 
-  console.log(">>", file);
+  // console.log(">>", file);
 
   const arrayBuffer = await file.arrayBuffer();
   const audio = new Uint8Array(arrayBuffer);
 
   //  --- get audio transcription from Azure Whisper AI service ---
 
-  console.log("*** Transcribe Audio Sample ***");
+  // console.log("*** Transcribe Audio Sample ***");
 
   const client = new OpenAIClient(
     process.env.AZURE_ENDPOINT,
@@ -53,7 +53,7 @@ async function transcript(prevState: any, formData: FormData) {
     audio
   );
 
-  console.log(`Transcription: ${result.text}`);
+  // console.log(`Transcription: ${result.text}`);
 
   //  --- get chat completion from Azure OpenAI ---
 
@@ -77,7 +77,7 @@ async function transcript(prevState: any, formData: FormData) {
 
   const response = completions.choices[0].message?.content;
 
-  console.log(prevState.sender, "***", result.text);
+  // console.log(prevState.sender, "***", result.text);
 
   return {
     sender: result.text,
